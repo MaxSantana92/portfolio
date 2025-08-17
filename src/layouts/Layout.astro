@@ -2,13 +2,14 @@
 interface Props {
   title: string;
   description?: string;
+  lang?: string;
 }
 
-const { title, description = "Developer portfolio showcasing projects and skills" } = Astro.props;
+const { title, description = "Developer portfolio showcasing projects and skills", lang = "es" } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang={lang} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -40,7 +41,9 @@ const { title, description = "Developer portfolio showcasing projects and skills
       }
 
       // Update localStorage when theme changes
-      window.localStorage.setItem('theme', theme);
+      if (theme) {
+        window.localStorage.setItem('theme', theme);
+      }
     </script>
   </body>
 </html>

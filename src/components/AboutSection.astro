@@ -1,40 +1,42 @@
 ---
 // About section with bio and expertise
 import type { PersonalInfo, Education, Experience } from '../types';
+import { useTranslations } from '../i18n/ui';
 
-interface AboutData {
-  personal: PersonalInfo;
-  education: Education;
-  experience: Experience;
-  location: string;
-  languages: string[];
-  image: string;
+interface Props {
+  lang?: string;
 }
 
-const aboutData: AboutData = {
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang as 'en' | 'es');
+
+const aboutData = {
   personal: {
     name: 'Max Santana',
     title: 'Full Stack Developer',
-    description: `I'm a passionate Full Stack Developer with over 5 years of experience building web and mobile applications. 
-    My journey in technology began when I built my first website at 15, and I've been hooked ever since.`,
+    description: lang === 'en' 
+      ? `I'm a passionate Full Stack Developer with over 5 years of experience building web and mobile applications. 
+      My journey in technology began when I built my first website at 15, and I've been hooked ever since.`
+      : `Soy un Desarrollador Full Stack apasionado con más de 5 años de experiencia construyendo aplicaciones web y móviles. 
+      Mi viaje en la tecnología comenzó cuando construí mi primer sitio web a los 15 años, y desde entonces estoy enganchado.`,
     avatar: 'https://images.pexels.com/photos/4049992/pexels-photo-4049992.jpeg?auto=compress&cs=tinysrgb&w=800'
   },
   education: {
     id: '1',
     institution: 'Stanford University',
-    degree: 'B.S. Computer Science',
+    degree: lang === 'en' ? 'B.S. Computer Science' : 'Lic. en Ciencias de la Computación',
     period: '2018-2022'
   },
   experience: {
     id: '1',
-    company: 'Various Companies',
-    position: 'Full Stack Developer',
-    period: '5+ Years',
-    description: 'Building web and mobile applications',
+    company: lang === 'en' ? 'Various Companies' : 'Varias Empresas',
+    position: lang === 'en' ? 'Full Stack Developer' : 'Desarrollador Full Stack',
+    period: lang === 'en' ? '5+ Years' : '5+ Años',
+    description: lang === 'en' ? 'Building web and mobile applications' : 'Construyendo aplicaciones web y móviles',
     technologies: ['React', 'Node.js', 'Python', 'AWS']
   },
-  location: 'San Francisco, CA\nAvailable for Remote',
-  languages: ['English (Native)', 'Spanish (Conversational)'],
+  location: lang === 'en' ? 'San Francisco, CA\nAvailable for Remote' : 'San Francisco, CA\nDisponible para Remoto',
+  languages: lang === 'en' ? ['English (Native)', 'Spanish (Conversational)'] : ['Inglés (Nativo)', 'Español (Conversacional)'],
   image: 'https://images.pexels.com/photos/4049992/pexels-photo-4049992.jpeg?auto=compress&cs=tinysrgb&w=800'
 };
 ---
@@ -42,7 +44,7 @@ const aboutData: AboutData = {
 <section id="about" class="py-20 bg-gray-50 dark:bg-gray-800">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16 animate-on-scroll">
-      <h2 class="text-3xl md:text-4xl font-bold text-primary-900 dark:text-white">About Me</h2>
+      <h2 class="text-3xl md:text-4xl font-bold text-primary-900 dark:text-white">{t('about.title')}</h2>
       <div class="mt-2 w-24 h-1 bg-accent-500 mx-auto rounded-full"></div>
     </div>
     
@@ -62,31 +64,34 @@ const aboutData: AboutData = {
       </div>
       
       <div class="space-y-6 animate-on-scroll order-1 lg:order-2">
-        <h3 class="text-2xl font-semibold text-primary-900 dark:text-white text-center lg:text-left">Who I Am</h3>
+        <h3 class="text-2xl font-semibold text-primary-900 dark:text-white text-center lg:text-left">
+          {t('about.whoIAm')}
+        </h3>
         <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
           {aboutData.personal.description}
         </p>
         <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-          I specialize in creating elegant solutions to complex problems with a focus on performance, 
-          accessibility, and user experience. My expertise spans across modern front-end frameworks, 
-          back-end technologies, and cloud infrastructure.
+          {lang === 'en' 
+            ? 'I specialize in creating elegant solutions to complex problems with a focus on performance, accessibility, and user experience. My expertise spans across modern front-end frameworks, back-end technologies, and cloud infrastructure.'
+            : 'Me especializo en crear soluciones elegantes para problemas complejos con un enfoque en rendimiento, accesibilidad y experiencia de usuario. Mi experiencia abarca frameworks front-end modernos, tecnologías back-end e infraestructura en la nube.'
+          }
         </p>
         
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
           <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
-            <h4 class="font-medium text-primary-900 dark:text-white">Education</h4>
+            <h4 class="font-medium text-primary-900 dark:text-white">{t('about.education')}</h4>
             <p class="text-gray-600 dark:text-gray-400 text-sm">{aboutData.education.degree}<br />{aboutData.education.institution}</p>
           </div>
           <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
-            <h4 class="font-medium text-primary-900 dark:text-white">Experience</h4>
+            <h4 class="font-medium text-primary-900 dark:text-white">{t('about.experience')}</h4>
             <p class="text-gray-600 dark:text-gray-400 text-sm">{aboutData.experience.period}<br />{aboutData.experience.position}</p>
           </div>
           <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
-            <h4 class="font-medium text-primary-900 dark:text-white">Location</h4>
+            <h4 class="font-medium text-primary-900 dark:text-white">{t('about.location')}</h4>
             <p class="text-gray-600 dark:text-gray-400 text-sm">{aboutData.location.split('\n')[0]}<br />{aboutData.location.split('\n')[1]}</p>
           </div>
           <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
-            <h4 class="font-medium text-primary-900 dark:text-white">Languages</h4>
+            <h4 class="font-medium text-primary-900 dark:text-white">{t('about.languages')}</h4>
             <p class="text-gray-600 dark:text-gray-400 text-sm">{aboutData.languages[0]}<br />{aboutData.languages[1]}</p>
           </div>
         </div>
