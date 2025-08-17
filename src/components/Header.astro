@@ -1,7 +1,12 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
 
-const navItems = [
+interface NavItem {
+  name: string;
+  href: string;
+}
+
+const navItems: NavItem[] = [
   { name: 'Home', href: '#hero' },
   { name: 'About', href: '#about' },
   { name: 'Skills', href: '#skills' },

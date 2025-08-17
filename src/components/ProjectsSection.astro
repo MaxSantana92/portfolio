@@ -1,51 +1,69 @@
 ---
 // Projects section with filterable gallery
+import type { Project } from '../types';
 
-const projects = [
+interface ProjectCategory {
+  id: string;
+  name: string;
+}
+
+const projects: Project[] = [
   {
+    id: '1',
     title: 'E-commerce Platform',
     description: 'A full-featured online store with payment processing, inventory management, and user accounts.',
     image: 'https://images.pexels.com/photos/6956903/pexels-photo-6956903.jpeg?auto=compress&cs=tinysrgb&w=800',
+    technologies: ['React', 'Node.js', 'MongoDB', 'Stripe'],
     tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
     link: '#',
     category: 'fullstack'
   },
   {
+    id: '2',
     title: 'Health & Fitness App',
     description: 'Mobile application for tracking workouts, nutrition, and personal health metrics.',
     image: 'https://images.pexels.com/photos/4386431/pexels-photo-4386431.jpeg?auto=compress&cs=tinysrgb&w=800',
+    technologies: ['React Native', 'Firebase', 'Charts.js'],
     tags: ['React Native', 'Firebase', 'Charts.js'],
     link: '#',
     category: 'mobile'
   },
   {
+    id: '3',
     title: 'Financial Dashboard',
     description: 'Interactive data visualization platform for financial analytics and portfolio management.',
     image: 'https://images.pexels.com/photos/7567562/pexels-photo-7567562.jpeg?auto=compress&cs=tinysrgb&w=800',
+    technologies: ['Vue.js', 'D3.js', 'Express', 'PostgreSQL'],
     tags: ['Vue.js', 'D3.js', 'Express', 'PostgreSQL'],
     link: '#',
     category: 'frontend'
   },
   {
+    id: '4',
     title: 'Social Media Platform',
     description: 'Community platform with real-time messaging, content sharing, and user engagement features.',
     image: 'https://images.pexels.com/photos/5926382/pexels-photo-5926382.jpeg?auto=compress&cs=tinysrgb&w=800',
+    technologies: ['React', 'Socket.io', 'Node.js', 'MongoDB'],
     tags: ['React', 'Socket.io', 'Node.js', 'MongoDB'],
     link: '#',
     category: 'fullstack'
   },
   {
+    id: '5',
     title: 'Task Management System',
     description: 'Productivity tool for teams to manage projects, tasks, and deadlines effectively.',
     image: 'https://images.pexels.com/photos/3243/pen-calendar-to-do-checklist.jpg?auto=compress&cs=tinysrgb&w=800',
+    technologies: ['TypeScript', 'React', 'Redux', 'Express'],
     tags: ['TypeScript', 'React', 'Redux', 'Express'],
     link: '#',
     category: 'frontend'
   },
   {
+    id: '6',
     title: 'Travel Companion App',
     description: 'Mobile application for travelers with itinerary planning, maps, and local recommendations.',
     image: 'https://images.pexels.com/photos/1051075/pexels-photo-1051075.jpeg?auto=compress&cs=tinysrgb&w=800',
+    technologies: ['React Native', 'Google Maps API', 'Firebase'],
     tags: ['React Native', 'Google Maps API', 'Firebase'],
     link: '#',
     category: 'mobile'
@@ -109,7 +127,7 @@ const categories = [
               {project.description}
             </p>
             <div class="flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
+              {project.tags?.map((tag) => (
                 <span class="px-2 py-1 bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs rounded-md">
                   {tag}
                 </span>
@@ -140,15 +158,16 @@ const categories = [
       
       const category = button.getAttribute('data-category');
       
-      projectCards.forEach(card => {
+      projectCards.forEach((card: Element) => {
+        const cardElement = card as HTMLElement;
         if (category === 'all' || card.getAttribute('data-category') === category) {
-          card.style.display = 'block';
+          cardElement.style.display = 'block';
           // Add a small delay for a staggered animation effect
           setTimeout(() => {
             card.classList.add('active');
           }, 50);
         } else {
-          card.style.display = 'none';
+          cardElement.style.display = 'none';
           card.classList.remove('active');
         }
       });

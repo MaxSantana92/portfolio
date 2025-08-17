@@ -1,6 +1,21 @@
 ---
 // Hero section with animated introduction
+import type { ImageMetadata } from 'astro';
 import hero_section from '../assets/hero-section.png';
+
+interface HeroData {
+  name: string;
+  title: string;
+  description: string;
+  image: ImageMetadata;
+}
+
+const heroData: HeroData = {
+  name: 'Max Santana',
+  title: 'Full Stack Developer',
+  description: 'I build exceptional digital experiences with modern technologies that solve real-world problems.',
+  image: hero_section
+};
 ---
 
 <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden py-16 md:py-0">
@@ -9,16 +24,15 @@ import hero_section from '../assets/hero-section.png';
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative z-10">
     <div class="text-white space-y-6 animate-fade-in text-center lg:text-left">
       <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight">
-        Hi, I'm <span class="text-accent-400">Max Santana</span>
+        Hi, I'm <span class="text-accent-400">{heroData.name}</span>
       </h1>
       
       <h2 class="text-xl md:text-3xl font-medium opacity-90 animate-delay-100">
-        Full Stack Developer
+        {heroData.title}
       </h2>
       
       <p class="text-base md:text-xl opacity-80 max-w-lg mx-auto lg:mx-0 animate-delay-200">
-        I build exceptional digital experiences with modern technologies 
-        that solve real-world problems.
+        {heroData.description}
       </p>
       
       <div class="pt-4 flex flex-wrap gap-4 justify-center lg:justify-start animate-delay-300">
@@ -36,7 +50,7 @@ import hero_section from '../assets/hero-section.png';
         <div class="absolute top-0 right-0 w-4/5 h-4/5 bg-accent-500/20 rounded-3xl backdrop-blur-md animate-slide-in-right"></div>
         <div class="absolute bottom-0 left-0 w-4/5 h-4/5 border-2 border-white/20 rounded-3xl"></div>
         <img 
-          src={hero_section} 
+          src={heroData.image.src} 
           alt="Developer working" 
           class="absolute inset-0 m-auto w-4/5 h-4/5 object-cover rounded-2xl shadow-2xl animate-slide-up"
         />
