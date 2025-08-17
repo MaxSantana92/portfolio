@@ -1,0 +1,90 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+const navItems = [
+  { name: 'Home', href: '#hero' },
+  { name: 'About', href: '#about' },
+  { name: 'Skills', href: '#skills' },
+  { name: 'Projects', href: '#projects' },
+  { name: 'Contact', href: '#contact' },
+];
+---
+
+<header class="fixed w-full z-50 transition-all duration-300" id="header">
+  <div class="mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center py-4">
+      <a href="#" class="text-xl sm:text-2xl font-bold tracking-tight text-primary-900 dark:text-white">
+        <span class="text-accent-500">Dev</span>Portfolio
+      </a>
+      
+      <div class="flex items-center gap-4 sm:gap-8">
+        <nav class="hidden md:flex space-x-4 lg:space-x-8">
+          {navItems.map(item => (
+            <a 
+              href={item.href}
+              class="text-sm font-medium text-gray-700 hover:text-accent-500 dark:text-gray-200 dark:hover:text-accent-400 transition-colors"
+            >
+              {item.name}
+            </a>
+          ))}
+        </nav>
+        
+        <ThemeToggle />
+        
+        <button id="menu-toggle" class="md:hidden text-gray-800 dark:text-gray-200" aria-label="Toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 shadow-lg">
+    <div class="px-4 py-2 space-y-1">
+      {navItems.map(item => (
+        <a 
+          href={item.href}
+          class="block py-3 text-base font-medium text-gray-700 hover:text-accent-500 dark:text-gray-200 dark:hover:text-accent-400 text-center"
+        >
+          {item.name}
+        </a>
+      ))}
+    </div>
+  </div>
+</header>
+
+<script>
+  // Handle scroll behavior for header
+  const header = document.getElementById('header');
+  const scrollThreshold = 50;
+
+  function updateHeader() {
+    if (window.scrollY > scrollThreshold) {
+      header?.classList.add('bg-white/90', 'dark:bg-gray-900/90', 'backdrop-blur-md', 'shadow-md');
+    } else {
+      header?.classList.remove('bg-white/90', 'dark:bg-gray-900/90', 'backdrop-blur-md', 'shadow-md');
+    }
+  }
+
+  // Initial call and event listener
+  updateHeader();
+  window.addEventListener('scroll', updateHeader);
+
+  // Mobile menu toggle
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  menuToggle?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+  });
+
+  // Close mobile menu when clicking menu items
+  const mobileMenuItems = mobileMenu?.querySelectorAll('a');
+  mobileMenuItems?.forEach(item => {
+    item.addEventListener('click', () => {
+      mobileMenu?.classList.add('hidden');
+    });
+  });
+</script>

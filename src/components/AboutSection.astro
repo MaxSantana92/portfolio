@@ -1,0 +1,79 @@
+---
+// About section with bio and expertise
+---
+
+<section id="about" class="py-20 bg-gray-50 dark:bg-gray-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 animate-on-scroll">
+      <h2 class="text-3xl md:text-4xl font-bold text-primary-900 dark:text-white">About Me</h2>
+      <div class="mt-2 w-24 h-1 bg-accent-500 mx-auto rounded-full"></div>
+    </div>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div class="animate-on-scroll order-2 lg:order-1">
+        <div class="relative">
+          <div class="aspect-square max-w-md mx-auto overflow-hidden rounded-2xl shadow-xl">
+            <img 
+              src="https://images.pexels.com/photos/4049992/pexels-photo-4049992.jpeg?auto=compress&cs=tinysrgb&w=800" 
+              alt="Developer profile" 
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-accent-500 rounded-xl hidden sm:block"></div>
+          <div class="absolute -top-6 -left-6 w-24 h-24 border-2 border-primary-900 dark:border-white rounded-xl hidden sm:block"></div>
+        </div>
+      </div>
+      
+      <div class="space-y-6 animate-on-scroll order-1 lg:order-2">
+        <h3 class="text-2xl font-semibold text-primary-900 dark:text-white text-center lg:text-left">Who I Am</h3>
+        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+          I'm a passionate Full Stack Developer with over 5 years of experience building web and mobile applications. 
+          My journey in technology began when I built my first website at 15, and I've been hooked ever since.
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+          I specialize in creating elegant solutions to complex problems with a focus on performance, 
+          accessibility, and user experience. My expertise spans across modern front-end frameworks, 
+          back-end technologies, and cloud infrastructure.
+        </p>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+          <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
+            <h4 class="font-medium text-primary-900 dark:text-white">Education</h4>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">B.S. Computer Science<br />Stanford University</p>
+          </div>
+          <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
+            <h4 class="font-medium text-primary-900 dark:text-white">Experience</h4>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">5+ Years<br />Full Stack Development</p>
+          </div>
+          <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
+            <h4 class="font-medium text-primary-900 dark:text-white">Location</h4>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">San Francisco, CA<br />Available for Remote</p>
+          </div>
+          <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
+            <h4 class="font-medium text-primary-900 dark:text-white">Languages</h4>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">English (Native)<br />Spanish (Conversational)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Animation on scroll
+  const animatedElements = document.querySelectorAll('.animate-on-scroll');
+  
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+  
+  animatedElements.forEach(el => {
+    observer.observe(el);
+  });
+</script>

@@ -1,0 +1,175 @@
+---
+// Projects section with filterable gallery
+
+const projects = [
+  {
+    title: 'E-commerce Platform',
+    description: 'A full-featured online store with payment processing, inventory management, and user accounts.',
+    image: 'https://images.pexels.com/photos/6956903/pexels-photo-6956903.jpeg?auto=compress&cs=tinysrgb&w=800',
+    tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
+    link: '#',
+    category: 'fullstack'
+  },
+  {
+    title: 'Health & Fitness App',
+    description: 'Mobile application for tracking workouts, nutrition, and personal health metrics.',
+    image: 'https://images.pexels.com/photos/4386431/pexels-photo-4386431.jpeg?auto=compress&cs=tinysrgb&w=800',
+    tags: ['React Native', 'Firebase', 'Charts.js'],
+    link: '#',
+    category: 'mobile'
+  },
+  {
+    title: 'Financial Dashboard',
+    description: 'Interactive data visualization platform for financial analytics and portfolio management.',
+    image: 'https://images.pexels.com/photos/7567562/pexels-photo-7567562.jpeg?auto=compress&cs=tinysrgb&w=800',
+    tags: ['Vue.js', 'D3.js', 'Express', 'PostgreSQL'],
+    link: '#',
+    category: 'frontend'
+  },
+  {
+    title: 'Social Media Platform',
+    description: 'Community platform with real-time messaging, content sharing, and user engagement features.',
+    image: 'https://images.pexels.com/photos/5926382/pexels-photo-5926382.jpeg?auto=compress&cs=tinysrgb&w=800',
+    tags: ['React', 'Socket.io', 'Node.js', 'MongoDB'],
+    link: '#',
+    category: 'fullstack'
+  },
+  {
+    title: 'Task Management System',
+    description: 'Productivity tool for teams to manage projects, tasks, and deadlines effectively.',
+    image: 'https://images.pexels.com/photos/3243/pen-calendar-to-do-checklist.jpg?auto=compress&cs=tinysrgb&w=800',
+    tags: ['TypeScript', 'React', 'Redux', 'Express'],
+    link: '#',
+    category: 'frontend'
+  },
+  {
+    title: 'Travel Companion App',
+    description: 'Mobile application for travelers with itinerary planning, maps, and local recommendations.',
+    image: 'https://images.pexels.com/photos/1051075/pexels-photo-1051075.jpeg?auto=compress&cs=tinysrgb&w=800',
+    tags: ['React Native', 'Google Maps API', 'Firebase'],
+    link: '#',
+    category: 'mobile'
+  }
+];
+
+const categories = [
+  { id: 'all', name: 'All Projects' },
+  { id: 'frontend', name: 'Frontend' },
+  { id: 'fullstack', name: 'Full Stack' },
+  { id: 'mobile', name: 'Mobile Apps' }
+];
+---
+
+<section id="projects" class="py-20 bg-gray-50 dark:bg-gray-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 animate-on-scroll">
+      <h2 class="text-3xl md:text-4xl font-bold text-primary-900 dark:text-white">My Projects</h2>
+      <div class="mt-2 w-24 h-1 bg-accent-500 mx-auto rounded-full"></div>
+      <p class="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        Here are some of my recent projects. Each one presented unique challenges and opportunities for growth.
+      </p>
+    </div>
+    
+    <div class="flex justify-center mb-8 animate-on-scroll">
+      <div class="inline-flex flex-wrap justify-center gap-2 bg-white dark:bg-gray-700 p-2 rounded-lg shadow-md">
+        {categories.map((category) => (
+          <button 
+            class="project-filter px-4 py-2 rounded-md text-sm font-medium transition-colors hover:bg-accent-500 hover:text-white" 
+            data-category={category.id}
+          >
+            {category.name}
+          </button>
+        ))}
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+      {projects.map((project) => (
+        <div class="project-card bg-white dark:bg-gray-700 rounded-xl overflow-hidden shadow-lg animate-on-scroll" data-category={project.category}>
+          <div class="relative overflow-hidden group">
+            <img 
+              src={project.image} 
+              alt={project.title} 
+              class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+              <div class="p-4 w-full">
+                <a href={project.link} class="block w-full text-center py-2 bg-accent-500 text-white rounded-md hover:bg-accent-600 transition-colors">
+                  View Project
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-primary-900 dark:text-white mb-2">
+              {project.title}
+            </h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
+              {project.description}
+            </p>
+            <div class="flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                <span class="px-2 py-1 bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs rounded-md">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Project filtering functionality
+  const filterButtons = document.querySelectorAll('.project-filter');
+  const projectCards = document.querySelectorAll('.project-card');
+  
+  // Set initial active state
+  document.querySelector('[data-category="all"]')?.classList.add('bg-accent-500', 'text-white');
+  
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Update active button state
+      filterButtons.forEach(btn => {
+        btn.classList.remove('bg-accent-500', 'text-white');
+      });
+      button.classList.add('bg-accent-500', 'text-white');
+      
+      const category = button.getAttribute('data-category');
+      
+      projectCards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'block';
+          // Add a small delay for a staggered animation effect
+          setTimeout(() => {
+            card.classList.add('active');
+          }, 50);
+        } else {
+          card.style.display = 'none';
+          card.classList.remove('active');
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .project-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>
