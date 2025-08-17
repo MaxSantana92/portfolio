@@ -1,5 +1,32 @@
 ---
 // Contact section with form and social links
+import type { ContactInfo } from '../types';
+
+interface ContactFormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+const contactInfo: ContactInfo = {
+  email: 'maxsantana.dev@gmail.com',
+  phone: '+1 (415) 555-0123',
+  location: 'San Francisco, CA',
+  socialMedia: {
+    github: 'https://github.com/maxsantana',
+    linkedin: 'https://linkedin.com/in/maxsantana',
+    twitter: 'https://twitter.com/maxsantana',
+    instagram: 'https://instagram.com/maxsantana'
+  }
+};
+
+const socialLinks = [
+  { name: 'GitHub', url: contactInfo.socialMedia.github, icon: 'github' },
+  { name: 'LinkedIn', url: contactInfo.socialMedia.linkedin, icon: 'linkedin' },
+  { name: 'Twitter', url: contactInfo.socialMedia.twitter, icon: 'twitter' },
+  { name: 'Instagram', url: contactInfo.socialMedia.instagram, icon: 'instagram' }
+];
 ---
 
 <section id="contact" class="py-20 bg-white dark:bg-gray-900">
@@ -84,8 +111,8 @@
               </div>
               <div>
                 <h4 class="text-lg font-medium text-primary-900 dark:text-white">Email</h4>
-                <a href="mailto:maxsantana.dev@gmail.com" class="text-gray-600 dark:text-gray-400 hover:text-accent-500 dark:hover:text-accent-400">
-                  maxsantana.dev@gmail.com
+                <a href={`mailto:${contactInfo.email}`} class="text-gray-600 dark:text-gray-400 hover:text-accent-500 dark:hover:text-accent-400">
+                  {contactInfo.email}
                 </a>
               </div>
             </div>
@@ -98,8 +125,8 @@
               </div>
               <div>
                 <h4 class="text-lg font-medium text-primary-900 dark:text-white">Phone</h4>
-                <a href="tel:+14155550123" class="text-gray-600 dark:text-gray-400 hover:text-accent-500 dark:hover:text-accent-400">
-                  +1 (415) 555-0123
+                <a href={`tel:${contactInfo.phone}`} class="text-gray-600 dark:text-gray-400 hover:text-accent-500 dark:hover:text-accent-400">
+                  {contactInfo.phone}
                 </a>
               </div>
             </div>
@@ -114,7 +141,7 @@
               <div>
                 <h4 class="text-lg font-medium text-primary-900 dark:text-white">Location</h4>
                 <p class="text-gray-600 dark:text-gray-400">
-                  San Francisco, CA<br />
+                  {contactInfo.location}<br />
                   Available for remote work worldwide
                 </p>
               </div>
@@ -167,7 +194,7 @@
 
 <script>
   // Form submission handler
-  const contactForm = document.getElementById('contact-form');
+  const contactForm = document.getElementById('contact-form') as HTMLFormElement;
   
   contactForm?.addEventListener('submit', (e) => {
     e.preventDefault();

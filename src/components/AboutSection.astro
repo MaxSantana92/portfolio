@@ -1,5 +1,42 @@
 ---
 // About section with bio and expertise
+import type { PersonalInfo, Education, Experience } from '../types';
+
+interface AboutData {
+  personal: PersonalInfo;
+  education: Education;
+  experience: Experience;
+  location: string;
+  languages: string[];
+  image: string;
+}
+
+const aboutData: AboutData = {
+  personal: {
+    name: 'Max Santana',
+    title: 'Full Stack Developer',
+    description: `I'm a passionate Full Stack Developer with over 5 years of experience building web and mobile applications. 
+    My journey in technology began when I built my first website at 15, and I've been hooked ever since.`,
+    avatar: 'https://images.pexels.com/photos/4049992/pexels-photo-4049992.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  education: {
+    id: '1',
+    institution: 'Stanford University',
+    degree: 'B.S. Computer Science',
+    period: '2018-2022'
+  },
+  experience: {
+    id: '1',
+    company: 'Various Companies',
+    position: 'Full Stack Developer',
+    period: '5+ Years',
+    description: 'Building web and mobile applications',
+    technologies: ['React', 'Node.js', 'Python', 'AWS']
+  },
+  location: 'San Francisco, CA\nAvailable for Remote',
+  languages: ['English (Native)', 'Spanish (Conversational)'],
+  image: 'https://images.pexels.com/photos/4049992/pexels-photo-4049992.jpeg?auto=compress&cs=tinysrgb&w=800'
+};
 ---
 
 <section id="about" class="py-20 bg-gray-50 dark:bg-gray-800">
@@ -14,7 +51,7 @@
         <div class="relative">
           <div class="aspect-square max-w-md mx-auto overflow-hidden rounded-2xl shadow-xl">
             <img 
-              src="https://images.pexels.com/photos/4049992/pexels-photo-4049992.jpeg?auto=compress&cs=tinysrgb&w=800" 
+              src={aboutData.image} 
               alt="Developer profile" 
               class="w-full h-full object-cover"
             />
@@ -27,8 +64,7 @@
       <div class="space-y-6 animate-on-scroll order-1 lg:order-2">
         <h3 class="text-2xl font-semibold text-primary-900 dark:text-white text-center lg:text-left">Who I Am</h3>
         <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
-          I'm a passionate Full Stack Developer with over 5 years of experience building web and mobile applications. 
-          My journey in technology began when I built my first website at 15, and I've been hooked ever since.
+          {aboutData.personal.description}
         </p>
         <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
           I specialize in creating elegant solutions to complex problems with a focus on performance, 
@@ -39,19 +75,19 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
           <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
             <h4 class="font-medium text-primary-900 dark:text-white">Education</h4>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">B.S. Computer Science<br />Stanford University</p>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">{aboutData.education.degree}<br />{aboutData.education.institution}</p>
           </div>
           <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
             <h4 class="font-medium text-primary-900 dark:text-white">Experience</h4>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">5+ Years<br />Full Stack Development</p>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">{aboutData.experience.period}<br />{aboutData.experience.position}</p>
           </div>
           <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
             <h4 class="font-medium text-primary-900 dark:text-white">Location</h4>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">San Francisco, CA<br />Available for Remote</p>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">{aboutData.location.split('\n')[0]}<br />{aboutData.location.split('\n')[1]}</p>
           </div>
           <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
             <h4 class="font-medium text-primary-900 dark:text-white">Languages</h4>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">English (Native)<br />Spanish (Conversational)</p>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">{aboutData.languages[0]}<br />{aboutData.languages[1]}</p>
           </div>
         </div>
       </div>
