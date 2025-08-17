@@ -1,34 +1,13 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import HeroSection from '../components/HeroSection.astro';
-import AboutSection from '../components/AboutSection.astro';
-import SkillsSection from '../components/SkillsSection.astro';
-import ProjectsSection from '../components/ProjectsSection.astro';
-import ContactSection from '../components/ContactSection.astro';
-import Footer from '../components/Footer.astro';
-
-interface PageData {
-  title: string;
-  description: string;
-  author: string;
-}
-
-const pageData: PageData = {
-  title: 'Max Santana | Full Stack Developer',
-  description: 'Full Stack Developer specializing in modern web technologies and creating exceptional digital experiences.',
-  author: 'Max Santana'
-};
+export const prerender = false;
 ---
 
-<Layout title={pageData.title}>
-  <Header />
-  <main>
-    <HeroSection />
-    <AboutSection />
-    <SkillsSection />
-    <ProjectsSection />
-    <ContactSection />
-  </main>
-  <Footer />
-</Layout>
+<script>
+  // Redirect to default language
+  const defaultLang = 'es';
+  const currentPath = window.location.pathname;
+  
+  if (currentPath === '/') {
+    window.location.href = `/${defaultLang}`;
+  }
+</script>
