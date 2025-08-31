@@ -1,6 +1,13 @@
 ---
-// Skills section with visual representation
 import type { SkillGroup } from '../types';
+import { useTranslations } from '../i18n/ui';
+
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang as 'en' | 'es');
 
 const skills: SkillGroup[] = [
   {
@@ -8,10 +15,10 @@ const skills: SkillGroup[] = [
     type: 'logos',
     items: [
       { name: 'React', icon: 'react', color: '#61DAFB' },
-      { name: 'Vue.js', icon: 'vue.js', color: '#4FC08D' },
-      { name: 'TypeScript', icon: 'typescript', color: '#3178C6' },
-      { name: 'HTML5', icon: 'html5', color: '#E34F26' },
-      { name: 'CSS3', icon: 'css3', color: '#1572B6' },
+      { name: 'Next.js', icon: 'nextdotjs', color: '#000000' },
+      { name: 'React Native + Expo', icon: 'expo', color: '#61DAFB', badge: 'expo' },
+      { name: 'Angular', icon: 'angular', color: '#DD0031' },
+      { name: 'Astro', icon: 'astro', color: '#FF5D01' },
       { name: 'Tailwind CSS', icon: 'tailwindcss', color: '#06B6D4' },
     ]
   },
@@ -20,34 +27,44 @@ const skills: SkillGroup[] = [
     type: 'logos',
     items: [
       { name: 'Node.js', icon: 'nodedotjs', color: '#339933' },
-      { name: 'Python', icon: 'python', color: '#3776AB' },
-      { name: 'Express', icon: 'express', color: '#000000' },
-      { name: 'PostgreSQL', icon: 'postgresql', color: '#336791' },
       { name: 'MongoDB', icon: 'mongodb', color: '#47A248' },
+      { name: 'TypeScript', icon: 'typescript', color: '#3178C6' },
+      { name: 'C#', icon: null, color: '#239120', isLocal: true, localSrc: '/c-sharp.png' },
+      { name: '.NET', icon: 'dotnet', color: '#512BD4' },
+      { name: 'MySQL', icon: 'mysql', color: '#4479A1' },
     ]
   },
   {
     category: 'Other',
     type: 'logos',
     items: [
+      { name: 'CursorIA', icon: null, color: '#6366F1', isLocal: true, localSrc: '/icon_cursor_ia.webp' },
       { name: 'Git', icon: 'git', color: '#F05032' },
       { name: 'GitHub', icon: 'github', color: '#181717' },
-      { name: 'Docker', icon: 'docker', color: '#2496ED' },
-      { name: 'AWS', icon: 'amazonaws', color: '#FF9900' },
+      { name: 'Jira', icon: 'jira', color: '#0052CC' },
       { name: 'Figma', icon: 'figma', color: '#F24E1E' },
     ]
-  }
+  },
 ];
+
+// etiquetas de categorías (solo visual)
+const categoryLabel = (cat: string) => {
+  if (lang === 'es') {
+    if (cat === 'Frontend') return 'Frontend';
+    if (cat === 'Backend') return 'Backend';
+    if (cat === 'Other') return 'Otras';
+  }
+  return cat;
+};
 ---
 
 <section id="skills" class="py-20 bg-white dark:bg-gray-900">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center mb-16 animate-on-scroll">
-      <h2 class="text-3xl md:text-4xl font-bold text-primary-900 dark:text-white">My Skills</h2>
+      <h2 class="text-3xl md:text-4xl font-bold text-primary-900 dark:text-white">{t('skills.title')}</h2>
       <div class="mt-2 w-24 h-1 bg-accent-500 mx-auto rounded-full"></div>
       <p class="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-        I've worked with a variety of technologies throughout my career.
-        Here's an overview of my technical skills and proficiency levels.
+        {t('skills.description')}
       </p>
     </div>
     
@@ -55,61 +72,48 @@ const skills: SkillGroup[] = [
       {skills.map((skillGroup) => (
         <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 shadow-md animate-on-scroll">
           <h3 class="text-xl font-semibold text-primary-900 dark:text-white mb-4">
-            {skillGroup.category}
+            {categoryLabel(skillGroup.category)}
           </h3>
           <div class="space-y-4">
             {skillGroup.type === 'logos' ? (
               <div class="grid grid-cols-3 gap-4">
-                {skillGroup.items.map((skill) => (
+                {skillGroup.items.map((skill: any) => (
                   <div class="flex flex-col items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                    <img 
-                      src={`https://cdn.simpleicons.org/${skill.icon}`}
-                      alt={skill.name}
-                      class="w-12 h-12 mb-2"
-                      style={`filter: ${skill.color ? `brightness(0) saturate(100%) invert(1) sepia(1) saturate(10000%) hue-rotate(${skill.color === '#61DAFB' ? '180deg' : skill.color === '#4FC08D' ? '120deg' : skill.color === '#3178C6' ? '210deg' : skill.color === '#E34F26' ? '15deg' : skill.color === '#1572B6' ? '210deg' : '180deg'})` : ''}`}
-                    />
+                    <div class="relative w-12 h-12 mb-2 flex items-center justify-center">
+                      {skill.isLocal ? (
+                        <img
+                          src={skill.localSrc}
+                          alt={skill.name}
+                          class="w-12 h-12"
+                        />
+                      ) : skill.icon ? (
+                        <img
+                          src={`https://cdn.simpleicons.org/${skill.icon}`}
+                          alt={skill.name}
+                          class="w-12 h-12"
+                        />
+                      ) : (
+                        <div class="w-12 h-12 rounded-full flex items-center justify-center text-white text-[10px] font-semibold"
+                             style={`background:${skill.color || '#64748B'}`}>
+                          {skill.initials || 'POO'}
+                        </div>
+                      )}
+                      {skill.badge && (
+                        <img
+                          src={`https://cdn.simpleicons.org/${skill.badge}`}
+                          alt="badge"
+                          class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-white dark:bg-gray-800 p-0.5 shadow"
+                        />
+                      )}
+                    </div>
                     <span class="text-xs text-gray-600 dark:text-gray-400 text-center">{skill.name}</span>
                   </div>
                 ))}
               </div>
-            ) : (
-              skillGroup.items.map((skill: any) => (
-                <div>
-                  <div class="flex justify-between mb-1">
-                    <span class="text-gray-700 dark:text-gray-300">{skill.name}</span>
-                    <span class="text-gray-500 dark:text-gray-400 text-sm">{skill.proficiency}%</span>
-                  </div>
-                  <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                    <div 
-                      class="bg-accent-500 h-2 rounded-full" 
-                      style={`width: ${skill.proficiency}%`}
-                    ></div>
-                  </div>
-                </div>
-              ))
-            )}
+            ) : null}
           </div>
         </div>
       ))}
-    </div>
-    
-    <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 animate-on-scroll">
-      <div class="text-center p-4">
-        <div class="text-4xl font-bold text-primary-900 dark:text-white">50+</div>
-        <div class="text-gray-600 dark:text-gray-400">Projects Completed</div>
-      </div>
-      <div class="text-center p-4">
-        <div class="text-4xl font-bold text-primary-900 dark:text-white">30+</div>
-        <div class="text-gray-600 dark:text-gray-400">Happy Clients</div>
-      </div>
-      <div class="text-center p-4">
-        <div class="text-4xl font-bold text-primary-900 dark:text-white">5+</div>
-        <div class="text-gray-600 dark:text-gray-400">Years Experience</div>
-      </div>
-      <div class="text-center p-4">
-        <div class="text-4xl font-bold text-primary-900 dark:text-white">12+</div>
-        <div class="text-gray-600 dark:text-gray-400">Technologies</div>
-      </div>
     </div>
   </div>
 </section>

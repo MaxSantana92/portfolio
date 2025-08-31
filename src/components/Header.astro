@@ -13,7 +13,7 @@ const navItems = [
   { name: t('nav.home'), href: '#hero' },
   { name: t('nav.about'), href: '#about' },
   { name: t('nav.skills'), href: '#skills' },
-  { name: t('nav.projects'), href: '#projects' },
+  /* { name: t('nav.projects'), href: '#projects' }, */
   { name: t('nav.contact'), href: '#contact' },
 ];
 ---
@@ -21,7 +21,7 @@ const navItems = [
 <header class="fixed w-full z-50 transition-all duration-300" id="header">
   <div class="mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center py-4">
-      <a href="#" class="text-xl sm:text-2xl font-bold tracking-tight text-white">
+      <a id="brand" href="#" class="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
         <span class="text-accent-500">Dev</span>Portfolio
       </a>
       
@@ -30,7 +30,7 @@ const navItems = [
           {navItems.map(item => (
             <a 
               href={item.href}
-              class="text-sm font-medium text-gray-200 hover:text-accent-500 dark:text-gray-200 dark:hover:text-accent-400 transition-colors"
+              class="text-sm font-medium text-gray-700 hover:text-accent-500 dark:text-gray-200 dark:hover:text-accent-400 transition-colors"
             >
               {item.name}
             </a>
@@ -41,7 +41,10 @@ const navItems = [
         
         <!-- Language Selector -->
         <div class="relative">
-          <select id="language-selector" class="bg-transparent text-gray-200 hover:text-accent-500 dark:text-gray-200 dark:hover:text-accent-400 text-sm border border-gray-300 dark:border-gray-600 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-accent-500 transition-colors cursor-pointer">
+          <select
+            id="language-selector"
+            class="bg-transparent text-gray-700 hover:text-accent-500 dark:text-gray-200 dark:hover:text-accent-400 text-sm border border-gray-400 dark:border-gray-600 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-accent-500 transition-colors cursor-pointer"
+          >
             {Object.entries(languages).map(([code, name]) => (
               <option value={code} selected={code === lang}>
                 {name}
@@ -50,7 +53,7 @@ const navItems = [
           </select>
         </div>
         
-        <button id="menu-toggle" class="md:hidden text-gray-800 dark:text-gray-200 z-50 relative" aria-label="Toggle menu">
+        <button id="menu-toggle" class="md:hidden text-gray-700 dark:text-gray-200 z-50 relative" aria-label="Toggle menu">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>
@@ -75,60 +78,98 @@ const navItems = [
 </header>
 
 <script>
-  // Handle scroll behavior for header
+  // Elementos
   const header = document.getElementById('header');
+  const brand = document.getElementById('brand');
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const langSelect = document.getElementById('language-selector');
+  const navLinks = header?.querySelectorAll('nav a');
+
   const scrollThreshold = 50;
 
+  function set(el, add = [], remove = []) {
+    if (!el) return;
+    if (remove.length) el.classList.remove(...remove);
+    if (add.length) el.classList.add(...add);
+  }
+
+  function setMany(els, add = [], remove = []) {
+    els?.forEach(el => set(el, add, remove));
+  }
+
   function updateHeader() {
-    if (window.scrollY > scrollThreshold) {
+    const scrolled = window.scrollY > scrollThreshold;
+    const isDark = document.documentElement.classList.contains('dark');
+
+    // Fondo + blur + sombra al hacer scroll
+    if (scrolled) {
       header?.classList.add('bg-white/90', 'dark:bg-gray-900/90', 'backdrop-blur-md', 'shadow-md');
     } else {
       header?.classList.remove('bg-white/90', 'dark:bg-gray-900/90', 'backdrop-blur-md', 'shadow-md');
     }
+
+    // Contraste de tipografía y bordes según tema y scroll
+    if (isDark) {
+      // Dark: siempre texto claro
+      set(brand, ['text-white'], ['text-gray-900']);
+      setMany(navLinks, ['text-gray-200'], ['text-gray-700']);
+      set(menuToggle, ['text-gray-200'], ['text-gray-700']);
+      set(langSelect, ['text-gray-200', 'border-gray-600'], ['text-gray-700', 'border-gray-400', 'border-gray-500']);
+    } else {
+      if (!scrolled) {
+        // Light + top (sobre hero oscuro): texto claro
+        set(brand, ['text-white'], ['text-gray-900']);
+        setMany(navLinks, ['text-gray-200'], ['text-gray-700']);
+        set(menuToggle, ['text-gray-200'], ['text-gray-700']);
+        set(langSelect, ['text-gray-200', 'border-gray-500'], ['text-gray-700', 'border-gray-400']);
+      } else {
+        // Light + scrolled (header blanco): texto oscuro
+        set(brand, ['text-gray-900'], ['text-white']);
+        setMany(navLinks, ['text-gray-700'], ['text-gray-200']);
+        set(menuToggle, ['text-gray-700'], ['text-gray-200']);
+        set(langSelect, ['text-gray-700', 'border-gray-400'], ['text-gray-200', 'border-gray-500']);
+      }
+    }
   }
 
-  // Initial call and event listener
+  // Inicializar + listeners
   updateHeader();
   window.addEventListener('scroll', updateHeader);
 
-  // Mobile menu toggle with fullscreen overlay
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
+  // Recalcular al cambiar tema (observa clase del <html>)
+  const themeObserver = new MutationObserver(updateHeader);
+  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
+  // Toggle menú móvil
   menuToggle?.addEventListener('click', () => {
     if (mobileMenu) {
       const isVisible = !mobileMenu.classList.contains('invisible');
-      
       if (isVisible) {
-        // Hide menu with fade out
         mobileMenu.classList.add('opacity-0', 'invisible');
         mobileMenu.classList.remove('opacity-100', 'visible');
-        // Prevent body scroll when menu is closed
         document.body.style.overflow = 'auto';
       } else {
-        // Show menu with fade in
         mobileMenu.classList.remove('opacity-0', 'invisible');
         mobileMenu.classList.add('opacity-100', 'visible');
-        // Prevent body scroll when menu is open
         document.body.style.overflow = 'hidden';
       }
     }
   });
 
-  // Close mobile menu when clicking menu items
+  // Cerrar menú móvil al hacer click en un enlace
   const mobileMenuItems = mobileMenu?.querySelectorAll('a');
   mobileMenuItems?.forEach(item => {
     item.addEventListener('click', () => {
       if (mobileMenu) {
         mobileMenu.classList.add('opacity-0', 'invisible');
         mobileMenu.classList.remove('opacity-100', 'visible');
-        // Restore body scroll
         document.body.style.overflow = 'auto';
       }
     });
   });
 
-  // Close menu when clicking outside (optional)
+  // Cerrar menú haciendo click fuera
   mobileMenu?.addEventListener('click', (e) => {
     if (e.target === mobileMenu) {
       mobileMenu.classList.add('opacity-0', 'invisible');
@@ -137,14 +178,12 @@ const navItems = [
     }
   });
 
-  // Language selector
-  const languageSelector = document.getElementById('language-selector') as HTMLSelectElement;
+  // Cambio de idioma
+  const languageSelector = document.getElementById('language-selector');
   languageSelector?.addEventListener('change', (e) => {
     const selectedLang = (e.target as HTMLSelectElement).value;
     const currentPath = window.location.pathname;
     const pathSegments = currentPath.split('/');
-    
-    // Replace the language segment in the URL
     if (pathSegments.length > 1) {
       pathSegments[1] = selectedLang;
       window.location.href = pathSegments.join('/');

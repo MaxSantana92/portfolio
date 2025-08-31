@@ -2,8 +2,10 @@
 export interface Skill {
   name: string
   proficiency?: number
-  icon?: string
+  icon?: string | undefined
   color?: string
+  badge?: string
+  src: ImageMetadata | string
 }
 
 export interface SkillGroup {

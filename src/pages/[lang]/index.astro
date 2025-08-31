@@ -20,10 +20,10 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const pageData = {
-  title: lang === 'es' ? 'Max Santana | Desarrollador Full Stack' : 'Max Santana | Full Stack Developer',
+  title: lang === 'es' ? 'Max Santana | Desarrollador Front-End Potenciado con IA' : 'Max Santana | AI-Powered Front-End Developer',
   description: lang === 'es' 
-    ? 'Desarrollador Full Stack especializado en tecnologías web modernas y creación de experiencias digitales excepcionales.'
-    : 'Full Stack Developer specializing in modern web technologies and creating exceptional digital experiences.',
+    ? 'Desarrollador Front-End Potenciado con IA, especializado en tecnologías web modernas potenciadas con IA.'
+    : 'AI-Powered Front-End Developer, specializing in modern AI-powered web technologies.',
   author: 'Max Santana'
 };
 ---
@@ -34,7 +34,7 @@ const pageData = {
     <HeroSection lang={lang} />
     <AboutSection lang={lang} />
     <SkillsSection lang={lang} />
-    <ProjectsSection lang={lang} />
+    <!-- <ProjectsSection lang={lang} /> -->
     <ContactSection lang={lang} />
   </main>
   <Footer lang={lang} />
