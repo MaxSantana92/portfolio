@@ -1,0 +1,38 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Se ejecuta en los pushes a la rama `main`
+  push:
+    branches: [main]
+  # Te permite ejecutar este flujo de trabajo manualmente desde la pestaña Actions
+  workflow_dispatch:
+
+# Permite que este trabajo clone el repo y cree un page deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout your repository using git
+        uses: actions/checkout@v4
+      - name: Install, build, and upload your site
+        uses: withastro/action@v2
+        # with:
+        # path: . # La ubicación raíz de tu proyecto de Astro. (opcional)
+        # node-version: 20 # La versión de Node.js a usar. (opcional)
+        # pnpm-version: 8 # La versión de pnpm a usar. (opcional)
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
