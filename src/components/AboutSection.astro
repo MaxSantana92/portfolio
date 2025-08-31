@@ -1,6 +1,7 @@
 ---
 // About section with bio and expertise
 import type { PersonalInfo, Education, Experience } from '../types';
+import about_set_up from '../assets/about-set-up.png';
 import { useTranslations } from '../i18n/ui';
 
 interface Props {
@@ -15,29 +16,31 @@ const aboutData = {
     name: 'Max Santana',
     title: 'Full Stack Developer',
     description: lang === 'en' 
-      ? `I'm a passionate Full Stack Developer with over 5 years of experience building web and mobile applications. 
-      My journey in technology began when I built my first website at 15, and I've been hooked ever since.`
-      : `Soy un Desarrollador Full Stack apasionado con más de 5 años de experiencia construyendo aplicaciones web y móviles. 
-      Mi viaje en la tecnología comenzó cuando construí mi primer sitio web a los 15 años, y desde entonces estoy enganchado.`,
+      ? `With over 4 years of solid experience in front-end development, I specialize in ecosystem technologies such as Angular, React.js, Next.js, Astro, React Native, and TypeScript. I also have knowledge of back-end languages, OOP, C#, .NET, and database management (SQL and NoSQL).
+
+I excel at analyzing new functionalities (both front-end and back-end) and proactively managing incident resolution. I have significant experience collaborating in an AMS (Application Management Services - L2 - L3) team.
+
+I offer a robust, proactive, and resilient technical profile with a comprehensive understanding of the software development lifecycle and customer/user management. I also use AI IDEs like Cursor and AI agents like Gemini, ChatGPT, and Claude, which further enhances my profile.`
+      : `Con 4+ años de experiencia consolidada en el desarrollo Front-End, especialista en tecnologías del ecosistema como Angular, React.js, Next.js, Astro, React Native y TypeScript.  Poseo conocimientos en lenguajes Back-End, POO, C#, .NET y gestión de bases de datos (SQL y NoSQL). Puedo destacar mi capacidad de realizar análisis de nuevas funcionalidades (tanto front como back) y en la gestión proactiva de resolución de incidentes al colaborar en un equipo AMS (Application Management Services - L2 - L3) . Aporto un perfil técnico robusto, proactivo y resiliente, incluyendo la comprensión integral del ciclo de vida del desarrollo de software y la gestión de clientes/usuarios. Implemento IDE’s de IA como Cursor y Agentes (Gemini, ChatGPT, Claude, o3). lo que potencia mi perfil.`,
     avatar: 'https://images.pexels.com/photos/4049992/pexels-photo-4049992.jpeg?auto=compress&cs=tinysrgb&w=800'
   },
   education: {
     id: '1',
-    institution: 'Stanford University',
+    institution: 'Universidad Nacional de San Juan',
     degree: lang === 'en' ? 'B.S. Computer Science' : 'Lic. en Ciencias de la Computación',
     period: '2018-2022'
   },
   experience: {
     id: '1',
     company: lang === 'en' ? 'Various Companies' : 'Varias Empresas',
-    position: lang === 'en' ? 'Full Stack Developer' : 'Desarrollador Full Stack',
-    period: lang === 'en' ? '5+ Years' : '5+ Años',
+    position: lang === 'en' ? 'Front-End Developer' : 'Desarrollador Front-End',
+    period: lang === 'en' ? '4+ Years' : '4+ Años',
     description: lang === 'en' ? 'Building web and mobile applications' : 'Construyendo aplicaciones web y móviles',
     technologies: ['React', 'Node.js', 'Python', 'AWS']
   },
-  location: lang === 'en' ? 'San Francisco, CA\nAvailable for Remote' : 'San Francisco, CA\nDisponible para Remoto',
-  languages: lang === 'en' ? ['English (Native)', 'Spanish (Conversational)'] : ['Inglés (Nativo)', 'Español (Conversacional)'],
-  image: 'https://images.pexels.com/photos/4049992/pexels-photo-4049992.jpeg?auto=compress&cs=tinysrgb&w=800'
+  location: lang === 'en' ? 'San Juan, Argentina\nAvailable for Remote' : 'San Juan, Argentina\nDisponible para Remoto',
+  languages: lang === 'en' ? ['Spanish (Conversational)', 'English (Proficient)'] : ['Español (Conversacional)', 'Inglés (Competente)'],
+  image: about_set_up
 };
 ---
 
@@ -53,7 +56,7 @@ const aboutData = {
         <div class="relative">
           <div class="aspect-square max-w-md mx-auto overflow-hidden rounded-2xl shadow-xl">
             <img 
-              src={aboutData.image} 
+              src={aboutData.image.src} 
               alt="Developer profile" 
               class="w-full h-full object-cover"
             />
@@ -70,12 +73,12 @@ const aboutData = {
         <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
           {aboutData.personal.description}
         </p>
-        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+        <!-- <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
           {lang === 'en' 
             ? 'I specialize in creating elegant solutions to complex problems with a focus on performance, accessibility, and user experience. My expertise spans across modern front-end frameworks, back-end technologies, and cloud infrastructure.'
             : 'Me especializo en crear soluciones elegantes para problemas complejos con un enfoque en rendimiento, accesibilidad y experiencia de usuario. Mi experiencia abarca frameworks front-end modernos, tecnologías back-end e infraestructura en la nube.'
           }
-        </p>
+        </p> -->
         
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
           <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-md">
