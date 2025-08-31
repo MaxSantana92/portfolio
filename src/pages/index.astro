@@ -2,9 +2,11 @@
 <script>
   // Redirect to default language
   const defaultLang = 'es';
+  const base = '/portfolio';
   const currentPath = window.location.pathname;
-
-  if (currentPath === '/portfolio') {
-    window.location.href = `/${defaultLang}`;
+  console.log('currentPath', currentPath);
+  if (currentPath === base || currentPath === `${base}/`) {
+    // Redirige a la página del idioma por defecto, construyendo la URL correcta
+    window.location.href = `${base}/${defaultLang}/`;
   }
 </script>
