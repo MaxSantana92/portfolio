@@ -1,12 +1,9 @@
----
-export const prerender = false;
----
 
 <script>
   // Redirect to default language
   const defaultLang = 'es';
   const currentPath = window.location.pathname;
-  
+
   if (currentPath === '/') {
     window.location.href = `/${defaultLang}`;
   }
