@@ -1,13 +1,14 @@
 name: Deploy to GitHub Pages
 
 on:
-  # Se ejecuta en los pushes a la rama `main`
+  # Trigger the workflow every time you push to the `main` branch
+  # Using a different branch name? Replace `main` with your branch’s name
   push:
     branches: [main]
-  # Te permite ejecutar este flujo de trabajo manualmente desde la pestaña Actions
+  # Allows you to run this workflow manually from the Actions tab on GitHub.
   workflow_dispatch:
 
-# Permite que este trabajo clone el repo y cree un page deployment
+# Allow this job to clone the repo and create a page deployment
 permissions:
   contents: read
   pages: write
@@ -20,11 +21,13 @@ jobs:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
       - name: Install, build, and upload your site
-        uses: withastro/action@v2
+        uses: withastro/action@v3
         # with:
-        # path: . # La ubicación raíz de tu proyecto de Astro. (opcional)
-        # node-version: 20 # La versión de Node.js a usar. (opcional)
-        # pnpm-version: 8 # La versión de pnpm a usar. (opcional)
+        # path: . # The root location of your Astro project inside the repository. (optional)
+        # node-version: 20 # The specific version of Node that should be used to build your site. Defaults to 20. (optional)
+        # package-manager: pnpm@latest # The Node package manager that should be used to install dependencies and build your site. Automatically detected based on your lockfile. (optional)
+        # env:
+        # PUBLIC_POKEAPI: 'https://pokeapi.co/api/v2' # Use single quotation marks for the variable value. (optional)
 
   deploy:
     needs: build
