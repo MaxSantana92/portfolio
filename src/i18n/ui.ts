@@ -111,8 +111,7 @@ export const ui = {
     'contact.send': 'Enviar Mensaje',
     'footer.copyright': '© 2025 DevPortfolio Max Santana. Todos los derechos reservados.',
     'footer.quickLinks': 'Enlaces Rápidos',
-    'footer.tagline':
-      'Creando experiencias digitales excepcionales con código limpio y diseño cuidadoso.',
+    'footer.tagline': 'Creando experiencias digitales excepcionales.',
   },
 } as const
 
