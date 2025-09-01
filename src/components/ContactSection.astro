@@ -48,7 +48,8 @@ const socialLinks = [
       <div class="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl shadow-md animate-on-scroll">
         <h3 class="text-2xl font-semibold text-primary-900 dark:text-white mb-6">{t('contact.form.title')}</h3>
         
-        <form id="contact-form" class="space-y-6" data-success-msg={t('contact.form.success')}>
+        <form id="contact-form" class="space-y-6" data-success-msg={t('contact.form.success')} action="https://formspree.io/f/xqadlnwo"
+        method="POST">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
               <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{t('contact.form.name')}</label>
@@ -96,7 +97,6 @@ const socialLinks = [
           
           <button 
             type="submit" 
-            disabled={true}
             class="w-full px-6 py-3 bg-gray-500 text-white font-medium rounded-lg transition-colors shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500"
           >
             {t('contact.form.submit')}
